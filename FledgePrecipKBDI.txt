@@ -1,0 +1,7 @@
+> setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data Analysis/Historical/Multiple Regression")
+> data<-read.csv(file="FledgePrecipKBDI.csv", header=TRUE, sep=",")
+> Fledge<-data$Fledge
+> Precip<-data$Precip
+> KBDI<-data$KBDI
+> model<-lm(Fledge ~ Precip + KBDI, data=data)
+> summary(model)

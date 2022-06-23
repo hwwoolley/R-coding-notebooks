@@ -1,0 +1,13 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Predator")
+
+data<-read.csv(file="PredFled.csv", header=TRUE, sep=",")
+
+Fledge<-data$Fledge
+Trap<-data$Trap
+
+
+cor(Trap, Fledge)
+
+lmod <- lm(Fledge ~ Trap, data=data)
+summary(lmod)
+p = 0.82

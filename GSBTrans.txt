@@ -1,0 +1,19 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Arthropod/Combined")
+
+data<-read.csv(file="GSB Trans.csv", header=TRUE, sep=",")
+
+GSB<-data$GSB
+Orth<-data$Orth Tran
+
+scatter.smooth(x=GSB, y=Orth, main="Orthopterans ~ GSB")
+
+par(mfrow=c(1, 2))
+hist(GSB)
+hist(Orth)
+boxplot(GSB, main="GSB", sub=paste("Outlier rows: ", boxplot.stats(GSB)$out))
+boxplot(Orth, main="Orthopterans", sub=paste("Outlier rows: ", boxplot.stats(Orth)$out))
+
+cor(GSB, Orth)
+
+lmod <- lm(Orth ~ GSB, data=data)
+summary(lmod)

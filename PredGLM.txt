@@ -1,0 +1,43 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Predator")
+data<-read.csv(file="TrapSeasonPredFled.csv", header=TRUE, sep=",")
+Fledge<-data$Fledge
+Trap<-data$Trap
+Bobcat<-data$Bobcat
+Coyote<-data$Coyote
+Raccoon<-data$Raccoon
+RedFox<-data$RedFox
+PrevTrap<-data$PrevTrap
+PrevBobcat<-data$PrevBobcat
+PrevCoyote<-data$PrevCoyote
+PrevRaccoon<-data$PrevRaccoon
+PrevRedFox<-data$PrevRedFox
+
+##Split into 2 models- current year and previous year.
+
+##Current year:
+model<-glm(Fledge ~ Trap + Bobcat + Coyote + Raccoon + RedFox, data=data, family="gaussian")
+summary(model)
+
+##Reduce model
+step.model<-step(model, direction = "both", trace = FALSE)
+summary(step.model)
+
+##Check removing highest p-value (raccoon)
+model1<-glm(Fledge~Bobcat, data = data, family = "gaussian")
+summary(model1)
+#Delta AIC < 2, include
+
+
+##Previous year:
+model2<-glm(Fledge ~ PrevTrap + PrevBobcat + PrevCoyote + PrevRaccoon + PrevRedFox, data=data, family="gaussian")
+summary(model2)
+
+##Reduce model
+step.model2<-step(model2, direction = "both", trace = FALSE)
+summary(step.model2)
+##Reduced model includes no previous year trapping variables
+
+##Try just lowest p-value term (PrevBobcat).
+model3<-glm(Fledge~PrevBobcat, data=data, family = "gaussian")
+summary(model3)
+##Not significant

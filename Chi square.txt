@@ -1,0 +1,12 @@
+##Chi square test comparing woody vegetation parameters between trap sites and null distribution
+help(chisq.test)
+table(trap, null)
+TAB->table(trap,null)
+barplot(TAB, beside = T, legend = T)
+chisq.test(TAB, correct = T)
+CHI -> chisq.test(TAB, correct = T)
+attributes(CHI)
+CHI$expected
+
+##Fisher's Exact Test (non-parametric equivalent to Chi square test)
+fisher.test(TAB, conf.int = T, conf.level = 0.99)

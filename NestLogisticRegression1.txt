@@ -1,0 +1,39 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/GIS Files/Data_Analysis/Combined")
+
+data<-read.csv(file="CombinedNest.csv", header=TRUE, sep=",")
+
+Fledged<-data$DidFledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPAR<-data$WoodyPAR
+
+
+##Preliminary analysis GLM to determine significant predictors.
+
+model1 <- glm(DidFledge ~ WoodyPerimeter+WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(model1)
+
+#Remove highest p-value (Area)
+model2 <- glm(DidFledge ~ WoodyPerimeter + WoodyPAR, family = "binomial", data = data)
+summary(model2)
+
+#Remove highest p-value (PAR)
+model3 <- glm(DidFledge ~ WoodyPerimeter, family = "binomial", data = data)
+summary(model3)
+
+##Plot logistic regression
+
+##1: fit logistic regression model
+model <- glm(DidFledge ~ Perimeter, family = "binomial", data = data)
+
+##2: define new data frame that contains the predictor variable (WoodyPAR)
+newdata <- data.frame(WoodyPerimeter = seq(min(data$WoodyPerimter), max(data$WoodyPerimeter), len = 500))
+
+##3: use fitted model to predict values of response variable (DidFledge)
+newdata$DidFledge = predict(model, newdata, type = "response")
+
+##4: plot logistic regression curve
+plot(DidFledge ~ WoodyPerimeter, data = data, col = "black")
+lines(DidFledge ~ WoodyPerimeter, newdata, lwd = 2)
+
+

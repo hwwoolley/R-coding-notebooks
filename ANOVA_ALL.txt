@@ -1,0 +1,85 @@
+> my_data <- read.csv(file.choose())
+
+
+#Boxplot 2018, 2019 Veg
+> boxplot(my_data$Veg2018,my_data$Veg2019, names=c("2018Veg","2019Veg"),ylab="g*.25m^-2")
+
+#Boxplot 2018, 2019 Arth Mass
+> boxplot(my_data$ArthG2018,my_data$ArthG2019, names=c("2018","2019"),ylab="Arthropod Mass (g)")
+
+#Boxplot 2018, 2019 Sweep Orthopteran Mass
+> boxplot(my_data$SweepG2018,my_data$SweepG2019, names=c("2018","2019"),ylab="Orthopteran Mass (g)", xlab="Arthropod Sweep")
+
+#Boxplot 2018, 2019 Sweep Orthopteran Number
+> boxplot(my_data$SweepN2018,my_data$SweepN2019, names=c("2018","2019"),ylab="Number Orthopterans", xlab="Arthropod Sweep")
+
+#Boxplot 2018, 2019 Orthopteran Transect Number
+> boxplot(my_data$Tran2018,my_data$Tran2019, names=c("2018","2019"),ylab="Number Orthopterans", xlab="Transect")
+
+# Compute the analysis of variance for Veg
+> res.aov.veg <- aov(Veg2018 ~ Veg2019, data = my_data)
+
+# Summary of the analysis for Veg
+> summary(res.aov.veg)
+
+# Compute the analysis of variance for Arth Mass
+> res.aov.Arth <- aov(ArthG2018 ~ ArthG2019, data = my_data)
+
+# Summary of the analysis for Arth Mass
+> summary(res.aov.Arth)
+
+# Compute the analysis of variance for Orth Mass
+> res.aov.Orth <- aov(SweepG2018 ~ SweepG2019, data = my_data)
+
+# Summary of the analysis for Orth Mass
+> summary(res.aov.Orth)
+
+# Compute the analysis of variance for Orth Sweep Number
+> res.aov.OrthN <- aov(SweepN2018 ~ SweepN2019, data = my_data)
+
+# Summary of the analysis for Orth Sweep Number
+> summary(res.aov.OrthN)
+
+# Compute the analysis of variance for Orth Transects
+> res.aov.Tran <- aov(Tran2018 ~ Tran2019, data = my_data)
+
+# Summary of the analysis for Orth Sweep Number
+> summary(res.aov.Tran)
+
+#Check ANOVA assumption of normality for Veg
+
+>veg_aov_residuals <- residuals(object = res.aov.veg )
+# Run Shapiro-Wilk test
+>shapiro.test(x = veg_aov_residuals )
+
+#Check ANOVA assumption of normality for Arth Mass
+
+>Arth_aov_residuals <- residuals(object = res.aov.Arth )
+# Run Shapiro-Wilk test
+>shapiro.test(x = Arth_aov_residuals )
+
+#Check ANOVA assumption of normality for Orth Mass
+
+>Orth_aov_residuals <- residuals(object = res.aov.Orth )
+# Run Shapiro-Wilk test
+>shapiro.test(x = Orth_aov_residuals )
+
+#Check ANOVA assumption of normality for Orth Sweep Number
+
+>OrthN_aov_residuals <- residuals(object = res.aov.OrthN )
+# Run Shapiro-Wilk test
+>shapiro.test(x = OrthN_aov_residuals )
+
+#Check ANOVA assumption of normality for Orth Tran Number
+
+>Tran_aov_residuals <- residuals(object = res.aov.Tran )
+# Run Shapiro-Wilk test
+>shapiro.test(x = Tran_aov_residuals )
+
+#Check ANOVA assumption of homogeneity of varaiance for variables
+
+> plot(res.aov.veg, 1)
+> plot(res.aov.Arth, 1)
+> plot(res.aov.Orth, 1)
+> plot(res.aov.OrthN, 1)
+> plot(res.aov.Tran, 1)

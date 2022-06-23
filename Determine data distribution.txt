@@ -1,0 +1,8 @@
+#Determine distribution using gamlss package
+#https://stats.stackexchange.com/questions/132652/how-to-determine-which-distribution-fits-my-data-best
+
+library(gamlss)
+
+#Determine distribution of x
+fit<-fitDist(x, k=2, type = "realplus", trace = FALSE, try.gamlss = TRUE)
+summary(fit)

@@ -1,0 +1,13 @@
+##No GSB7 shows GSB 3,4,5 outlier
+
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Arthropod/Combined")
+
+data<-read.csv(file="ANOVAGSBTrans.csv", header=TRUE, sep=",")
+
+GSB<-data$GSB
+Orth<-data$OrthTran
+
+lmod <- lm(Orth ~ GSB, data=data)
+summary(lmod)
+
+

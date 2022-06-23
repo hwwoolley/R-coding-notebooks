@@ -1,0 +1,33 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Current patterns/Production v fledging")
+
+data<-read.csv(file="Production v fledging.csv", header=TRUE, sep=",")
+
+
+DidFledge<-data$DidFledge
+ANPP<-data$ANPP
+Arth<-data$Arth
+Orth<-data$Orth
+RearArthTotal<-data$RearArthTotal
+RearArthMax<-data$RearArthMax
+RearOrthTotal<-data$RearOrthTotal
+RearOrthMax<-data$RearOrthMax
+
+##Preliminary analysis GLM to determine significant predictors. 
+
+model1 <- glm(DidFledge ~ ANPP + Arth + Orth, family = "binomial", data = data)
+summary(model1)
+
+model2 <- glm(DidFledge ~ ANPP, family = "binomial", data = data)
+summary(model2)
+
+model3 <- glm(DidFledge ~ Arth, family = "binomial", data = data)
+summary(model3)
+
+model4 <- glm(DidFledge ~ Orth, family = "binomial", data = data)
+summary(model4)
+
+model5<-glm(DidFledge ~ RearArthTotal + RearArthMax, family = "binomial", data = data)
+summary(model5)
+
+model6<-glm(DidFledge ~ RearOrthTotal + RearOrthMax, family = "binomial", data = data)
+summary(model6)

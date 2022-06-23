@@ -1,0 +1,20 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Historical/Crane/Nesting")
+
+data<-read.csv(file="Nests by pair.csv", header=TRUE, sep=",")
+
+pair<-data$Pair
+nest<-data$Nests
+fledge<-data$Fledge
+pctfledge<-data$PctFledge
+
+##Do regression model
+model<-lm(fledge ~ nest, data=data)
+summary(model)
+
+##Plot relationship
+plot(data$Nests, data$Fledge)
+
+##Add trendline
+abline(model)
+
+##apparently may need ggplot package to add line equation and r squared to plot.

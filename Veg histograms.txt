@@ -1,0 +1,8 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Landcover")
+data<-read.csv("CombinedTrapWood.csv")
+
+percent<-data$Percentage
+hist(percent) #histogram of percent woody cover
+
+PAR<-data$PAR
+hist(PAR) #histogram of PAR

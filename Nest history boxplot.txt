@@ -1,0 +1,23 @@
+## set working directory to load data
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Current patterns")
+
+## tell R what data you want to analyze
+data<-read.csv(file="Nesting history v production.csv", header=TRUE, sep=",")
+
+##set nesting variables
+compartment<-data$Compartment
+nests<-data$Total_nests
+fledged<-data$Total_fledged
+proportion<-data$Proportion_fledged
+
+## do Dixon's test to test for outliers
+dixon.test(nests, type = 0, opposite = FALSE, two.sided = TRUE) didn't work
+
+##do boxplot to show nesting outliers
+boxplot(data$Total.nests)
+
+##do boxplot to show fledging outliers
+boxplot(data$Total.fledged)
+
+##do boxplot to show proportion fledged outliers
+boxplot(data$Proportion.fledged)

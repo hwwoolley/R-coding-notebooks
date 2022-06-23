@@ -1,0 +1,71 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/EnvGLM")
+data<-read.csv(file="EnvGLM.csv", header=TRUE, sep=",")
+Pop<-data$Pop
+Nest<-data$Nest
+Fledge<-data$Fledge
+Precip<-data$Precip
+PrvYrPrcp<-data$PrvYrPrcp
+NestPrcp<-data$NestPrcp
+KBDI<-data$KBDI
+NestKBDI<-data$NestKBDI
+ExHeat<-data$ExHeat
+MeanTemp<-data$MeanTemp
+NestTemp<-data$NestTemp
+NestExHeat<-data$NestExHeat
+
+##Population model
+
+model<-glm(Pop ~ Precip + PrvYrPrcp + NestPrcp + KBDI + NestKBDI + ExHeat + MeanTemp + NestTemp + NestExHeat, data=data, family=gaussian(link="identity"))
+summary(model)
+
+##Pop best fit by AIC
+step.model<-step(model, direction = "both", trace = FALSE)
+summary(step.model)
+##Shows best fit Pop~NestPrcp + MeanTemp. 
+
+##Remove highest p-value (MeanTemp)
+model1<-glm(Pop~NestPrcp, data=data, family=gaussian(link="identity"))
+summary(model1)
+##The AIC increases slightly (>2) so including MeanTemp gives best fit even though it's not quite significant.
+
+##Nesting model
+model<-glm(Nest ~ Precip + PrvYrPrcp + NestPrcp + KBDI + NestKBDI + ExHeat + MeanTemp + NestTemp + NestExHeat, data=data, family="gaussian")
+summary(model)
+
+##Nest best fit by AIC
+step.model<-step(model, direction = "both", trace = FALSE)
+summary(step.model)
+
+##Try removing highest p-value (MeanTemp)
+model1<-glm(Nest ~ NestKBDI + NestTemp, data=data, family="gaussian")
+summary(model1)
+##AIC increases (<2), MeanTemp not sig; keep.
+
+##Try removing NestTemp
+model1<-glm(Nest ~ NestKBDI, data=data, family="gaussian")
+summary(model1)
+
+##Try next replacing MeanTemp with next lowest p-value KBDI
+model1<-glm(Nest ~ KBDI + NestKBDI + NestTemp, data=data, family="gaussian")
+summary(model1)
+##Delta AIC >2, don't include.
+
+##Try replacing MeanTemp with next lowest p-value PrvYrPrcp
+model2<-glm(Nest ~ PrvYrPrcp + NestKBDI + NestTemp, data=data, family="gaussian")
+summary(model2)
+##Delta AIC >2, don't include.
+
+
+
+##Fledging model
+model<-glm(Fledge ~ Precip + PrvYrPrcp + NestPrcp + KBDI + NestKBDI + ExHeat + MeanTemp + NestTemp + NestExHeat, data=data, family="gaussian")
+summary(model)
+
+##Fledging model best fit by AIC
+step.model<-step(model, direction = "both", trace = FALSE)
+summary(step.model)
+
+##Try adding next-lowest p-value, NestExHeat
+model1<-glm(Nest~ExHeat + NestExHeat, data=data, family = "gaussian")
+summary(model1)
+##Delta AIC way more than 2, don't include.

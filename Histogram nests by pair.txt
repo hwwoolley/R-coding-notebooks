@@ -1,0 +1,12 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Historical/Crane/Nesting")
+
+data<-read.csv(file="Nests by pair.csv", header=TRUE, sep=",")
+
+pair<-data$Pair
+nest<-data$Nests
+fledge<-data$Fledge
+pctfledge<-data$PctFledge
+
+hist(nest, breaks = 10)
+
+hist(fledge)

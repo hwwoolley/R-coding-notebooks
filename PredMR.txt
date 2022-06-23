@@ -1,0 +1,58 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Predator")
+data<-read.csv(file="TrapSeasonPredFled.csv", header=TRUE, sep=",")
+Fledge<-data$Fledge
+Trap<-data$Trap
+Bobcat<-data$Bobcat
+Coyote<-data$Coyote
+Dog<-data$Dog
+FeralCat<-data$FeralCat
+GrayFox<-data$GrayFox
+Opossum<-data$Opossum
+Raccoon<-data$Raccoon
+RedFox<-data$RedFox
+PrevTrap<-data$PrevTrap
+PrevBobcat<-data$PrevBobcat
+PrevCoyote<-data$PrevCoyote
+PrevDog<-data$PrevDog
+PrevFeralCat<-data$PrevFeralCat
+PrevGrayFox<-data$PrevGrayFox
+PrevOpossum<-data$PrevOpossum
+PrevRaccoon<-data$PrevRaccoon
+PrevRedFox<-data$PrevRedFox
+model<-lm(Fledge ~ Trap + Bobcat + Coyote + Dog + FeralCat + GrayFox + Opossum + Raccoon + RedFox + PrevTrap + PrevBobcat + PrevCoyote + PrevDog + PrevFeralCat + PrevGrayFox + PrevOpossum + PrevRaccoon + PrevRedFox, data=data)
+summary(model)
+
+##Too many variables (getting NA results). Only include most numerous predators (bobcat, coyote, opossum, raccoon)
+
+model<-lm(Fledge ~ Trap + Bobcat + Coyote + Opossum + Raccoon + PrevTrap + PrevBobcat + PrevCoyote + PrevOpossum + PrevRaccoon, data=data)
+summary(model)
+
+##Still too many variables.  Split into 2 regressions- current year and previous year.
+##Current year:
+
+model<-lm(Fledge ~ Trap + Bobcat + Coyote + Opossum + Raccoon, data=data)
+summary(model)
+
+##Previous year:
+
+model<-lm(Fledge ~ PrevTrap + PrevBobcat + PrevCoyote + PrevOpossum + PrevRaccoon, data=data)
+summary(model)
+
+##Split into 5 analyses: Total + Prev total, Bobcat + Prev Bobcat, Coyote + PrevCoyote, Opossum + PrevOpossum, Raccoon + PrevRaccoon
+
+total<-lm(Fledge ~ Trap + PrevTrap, data = data)
+summary(total)
+
+bob<-lm(Fledge ~ Bobcat + PrevBobcat, data = data)
+summary(bob)
+
+coy<-lm(Fledge ~ Coyote + PrevCoyote)
+summary(coy)
+
+possum<-lm(Fledge ~ Opossum + PrevOpossum)
+summary(possum)
+
+coon<-lm(Fledge ~ Raccoon + PrevRaccoon)
+summary(coon)
+
+

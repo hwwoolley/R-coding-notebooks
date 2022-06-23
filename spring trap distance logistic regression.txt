@@ -1,0 +1,27 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Historical/Landcover/Distance/Spring Trap")
+
+data<-read.csv(file="spring dist combined.csv", header=TRUE, sep=",")
+
+Fledged<-data$DidFledge
+Dist<-data$Dist
+
+##logistic regression
+
+model <- glm(DidFledge ~ Dist, family = "binomial", data = data)
+summary(model)
+
+##Plot logistic regression
+
+##1: fit logistic regression model
+model <- glm(DidFledge ~ Dist, family = "binomial", data = data)
+
+##2: define new data frame that contains the predictor variable (Dist)
+newdata <- data.frame(Dist = seq(min(data$Dist), max(data$Dist), len = 500))
+
+##3: use fitted model to predict values of response variable (DidFledge)
+newdata$DidFledge = predict(model, newdata, type = "response")
+
+##4: plot logistic regression curve
+plot(DidFledge ~ Dist, data = data, col = "black")
+lines(DidFledge ~ Dist, newdata, lwd = 2)
+

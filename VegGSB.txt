@@ -1,0 +1,19 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Vegetation/2018")
+
+data<-read.csv(file="GSB_VEG.csv", header=TRUE, sep=",")
+
+GSB<-data$GSB
+Veg<-data$Veg
+
+scatter.smooth(x=GSB, y=VEG, main="VEG ~ GSB")
+
+par(mfrow=c(1, 2))
+hist(GSB)
+hist(Veg)
+boxplot(GSB, main="GSB", sub=paste("Outlier rows: ", boxplot.stats(GSB)$out))
+boxplot(Veg, main="Veg", sub=paste("Outlier rows: ", boxplot.stats(Veg)$out))
+
+cor(GSB, Veg)
+
+lmod <- lm(Veg ~ GSB, data=data)
+summary(lmod)

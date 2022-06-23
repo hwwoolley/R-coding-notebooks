@@ -1,0 +1,23 @@
+## set working directory to load data
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data Analysis/Fledging")
+
+## tell R what data you want to analyze
+data<-read.csv(file="Nest by GSB.csv", header=TRUE, sep=",")
+
+## make a box and whisker graph to show differences between 2017 and 2018 nesting results by GSB
+boxplot(data)
+
+## load ggplot2
+library(ggplot2)
+
+## look at data
+data
+
+
+## run GLM to see if the results are significantly different.  Use zero-inflated Poisson distribution
+##(Categorical data, not continuous-0, 1, 2, or 3 GSB.  Most often get 0 nests, or if hatch, most often get 0 fledge.)
+
+
+
+
+

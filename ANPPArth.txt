@@ -1,0 +1,19 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Arthropod/2018")
+
+data<-read.csv(file="ANPPArth.csv", header=TRUE, sep=",")
+
+Veg<-data$Veg
+Arth<-data$ArthG
+
+scatter.smooth(x=Veg, y=Arth, main="Arthropod Biomass ~ ANPP")
+
+par(mfrow=c(1, 2))
+hist(Veg)
+hist(Arth)
+boxplot(Veg, main="ANPP", sub=paste("Outlier rows: ", boxplot.stats(Veg)$out))
+boxplot(Arth, main="Arthropod Biomass", sub=paste("Outlier rows: ", boxplot.stats(Arth)$out))
+
+cor(Veg, Arth)
+
+lmod <- lm(Arth ~ Veg, data=data)
+summary(lmod)

@@ -1,0 +1,19 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Multiple Regression")
+data<-read.csv(file="MR.csv", header=TRUE, sep=",")
+Fledge<-data$Fledge
+Precip<-data$Precip
+PrvYrPrcp<-data$PrvYrPrcp
+NestPrcp<-data$NestPrcp
+KBDI<-data$KBDI
+NestKBDI<-data$NestKBDI
+ExHeat<-data$ExHeat
+MeanTemp<-data$MeanTemp
+NestTemp<-data$NestTemp
+NestExHeat<-data$NestExHeat
+model<-lm(Fledge ~ Precip + PrvYrPrcp + NestPrcp + KBDI + NestKBDI + ExHeat + MeanTemp + NestTemp + NestExHeat, data=data)
+summary(model)
+
+##Stepwise model best fit by AIC
+full.model<-lm(Fledge ~ Precip + PrvYrPrcp + NestPrcp + KBDI + NestKBDI + ExHeat + MeanTemp + NestTemp + NestExHeat, data=data)
+step.model<-step(full.model, direction = "both", trace = FALSE)
+summary(step.model)

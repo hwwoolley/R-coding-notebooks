@@ -1,0 +1,9 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Crane")
+
+data<-read.csv(file="PopNestFledge.csv", header=TRUE, sep=",")
+
+barplot(data$Population, data$Year, main = "Population Trends 1995 - 2018", ylab = "Year End Population")
+
+barplot(data$Nest, data$Year, ylab = "Nests")
+
+barplot(data$Fledge, data$Year, xlab = "Year", ylab = "Chicks Fledged", names.arg = c(1995:2018), las = 1)

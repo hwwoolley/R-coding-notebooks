@@ -1,0 +1,25 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/GIS Files/Data_Analysis/Combined")
+
+data<-read.csv(file="CombinedNest.csv", header=TRUE, sep=",")
+
+Fledge<-data$DidFledge
+Water<-data$WaterArea
+
+##Do logistic regression model
+model <- glm(DidFledge ~ Water, family = "binomial", data = data)
+summary(model)
+
+##Plot logistic regression
+
+##1: fit logistic regression model
+model <- glm(DidFledge ~ WaterArea, family = "binomial", data = data)
+
+##2: define new data frame that contains the predictor variable (WoodyPAR)
+newdata <- data.frame(WaterArea = seq(min(data$WaterArea), max(data$WaterArea), len = 500))
+
+##3: use fitted model to predict values of response variable (DidFledge)
+newdata$DidFledge = predict(model, newdata, type = "response")
+
+##4: plot logistic regression curve
+plot(DidFledge ~ WaterArea, data = data, col = "black")
+lines(DidFledge ~ WaterArea, newdata, lwd = 2)

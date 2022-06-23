@@ -1,0 +1,23 @@
+## set working directory to load data
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/Current patterns/Production v fledging")
+
+## tell R what data to analyze
+data<-read.csv(file="Historical fledging v 2018 2019 production.csv", header=TRUE, sep=",")
+
+##set variables
+nest<-data$TotalNest
+fledge<-data$TotalFledge
+ANPP<-data$ANPP
+Arth<-data$Arth
+Orth<-data$Orth
+
+## do nest v prod multiple regression
+model1 <-lm(nest ~ ANPP + Arth + Orth, data=data)
+summary(model1)
+
+## do fledge v prod + nest multiple regression
+model2 <-lm(fledge ~ nest + ANPP + Arth + Orth, data=data)
+summary(model2)
+
+
+

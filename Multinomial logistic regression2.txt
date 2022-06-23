@@ -1,0 +1,68 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Historical/Landcover")
+data<-read.csv("CombinedTrapWood.csv")
+
+species<-data$Species
+perimeter<-data$Perimeter
+percent<-data$Percentage
+PAR<-data$PAR
+
+require(foreign)
+require(nnet)
+require(ggplot2)
+require(reshape2)
+
+#Create tables to visualize the oucome (Species) and the mean and sd of each predictor variable (perimeter, % cover, PAR)
+#Perimeter
+with(data, do.call(rbind, tapply(perimeter, species, function(x) c(M = mean(x), SD = sd(x)))))
+#% woody cover
+with(data, do.call(rbind, tapply(percent, species, function(x) c(M = mean(x), SD = sd(x))))) 
+#PAR
+with(data, do.call(rbind, tapply(PAR, species, function(x) c(M = mean(x), SD = sd(x))))) 
+
+#View descriptives and frequencies
+#load jmv package
+library(jmv)
+descriptives(data, vars = vars(Type, Perimeter, Percentage, PAR), freq = TRUE)
+
+#Designate Type 4 (Raccoon, largest category) as reference for other outcomes to be compared to; as.factor makes it a factor which is required.
+data$Type2<-relevel(as.factor(data$Type), ref = 4)
+
+#Create multinomial logistical regression model
+model<-multinom(Type2 ~ Perimeter + Percentage + PAR, data = data) #converged after 30 iterations
+summary(model)
+
+#Calculate p-values using Wald tests (z-tests)
+z <- summary(model)$coefficients/summary(model)$standard.errors
+z
+
+#2-tailed z test
+p <- (1 - pnorm(abs(z), 0, 1)) * 2
+p
+
+#Check model fit
+#need to unlibrary jmv since its anova function is conflicted with the anova function we'll be using
+detach("package:jmv", unload = TRUE)
+
+#Create "Only Intercept Model"
+OIM <- multinom(Type2 ~ 1, data = data)
+#Compare test model to the "Only Intercept Model"
+anova(OIM, model)
+
+#Calculate Goodness of Fit
+#Check predicted probability for each trap
+head(model$fitted.values, 30)
+#Get predicted result
+head(predict(model), 30) #result- all are 4- raccoons are by far the most plentiful (65% of total predators trapped).
+
+#Test goodness of fit
+chisq.test(data$Type2,predict(model))
+
+#Calculate pseudo R-Square (load DescTools pkg)
+library("DescTools")
+PseudoR2(model, which = c("CoxSnell","Nagelkerke","McFadden"))
+
+#Likelihood Ratio Tests (load lmtest pkg)
+library(lmtest)
+lrtest(model, "Perimeter")
+lrtest(model, "Percentage")
+lrtest(model, "PAR")

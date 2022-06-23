@@ -1,0 +1,19 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/Arthropod/2018")
+
+data<-read.csv(file="ANPPOrth.csv", header=TRUE, sep=",")
+
+Veg<-data$Veg
+Orth<-data$Tran
+
+scatter.smooth(x=Veg, y=Orth, main="Orthopterans ~ ANPP")
+
+par(mfrow=c(1, 2))
+hist(Veg)
+hist(Orth)
+boxplot(Veg, main="ANPP", sub=paste("Outlier rows: ", boxplot.stats(Veg)$out))
+boxplot(Orth, main="Orthopterans", sub=paste("Outlier rows: ", boxplot.stats(Orth)$out))
+
+cor(Veg, Orth)
+
+lmod <- lm(Orth ~ Veg, data=data)
+summary(lmod)

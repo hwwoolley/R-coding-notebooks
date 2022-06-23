@@ -1,0 +1,18 @@
+setwd("C:/Users/Henry/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/GIS Files/Data_Analysis/Combined")
+
+data<-read.csv(file="CombinedNest.csv", header=TRUE, sep=",")
+
+Woody<-data$WoodyPAR
+Herb<-data$HerbPercentage
+
+##Do regression model
+model<-lm(WoodyPAR ~ HerbPercentage, data=data)
+summary(model)
+
+##Plot relationship
+plot(data$HerbPercentage, data$WoodyPAR)
+
+##Add trendline
+abline(model)
+
+##apparently may need ggplot package to add line equation and r squared to plot.

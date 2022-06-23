@@ -1,0 +1,133 @@
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/Data_Analysis/Combined")
+
+data<-read.csv(file="CombinedNest.csv", header=TRUE, sep=",")
+
+Fledged<-data$DidFledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPct<-data$WoodyPercentage
+WoodyPAR<-data$WoodyPAR
+HerbPerimeter<-data$HerbPerimeter
+HerbArea<-data$HerbArea
+HerbPct<-data$HerbPercentage
+HerbPAR<-data$HerbPAR
+
+model1 <- glm(DidFledge ~ WoodyPerimeter+WoodyArea+WoodyPct+WoodyPAR+HerbPerimeter+HerbArea+HerbPct+HerbPAR, family = "binomial", data = data)
+summary(model1)
+
+model <- glm(DidFledge ~ HerbArea+HerbPAR, family = "binomial", data = data)
+summary(model)
+
+model <- glm(DidFledge ~ WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(model)
+
+##Need to include year bc combined covers 2018, 2016, 2014, 2012.
+
+year<-data$year
+
+model<-glm(DidFledge ~ Year+WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(model)
+
+##Need to analyze each year separately starting with 2018
+
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/Data_Analysis/2018")
+
+data<-read.csv(file="2018Nest.csv", header=TRUE, sep=",")
+
+Fledged<-data$DidFledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPct<-data$WoodyPercentage
+WoodyPAR<-data$WoodyPAR
+HerbPerimeter<-data$HerbPerimeter
+HerbArea<-data$HerbArea
+HerbPct<-data$HerbPercentage
+HerbPAR<-data$HerbPAR
+
+##logistic regression 2018 fledging explained by herbaceous vegetation area + PAR
+
+HerbModel2018<-glm(DidFledge ~ HerbArea+HerbPAR, family = "binomial", data = data)
+summary(HerbModel2018)
+
+##2018 woody area + PAR
+
+WoodyModel2018<-glm(DidFledge ~ WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(WoodyModel2018)
+
+##2016
+
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/Data_Analysis/2016")
+
+data<-read.csv(file="2016Nest.csv", header=TRUE, sep=",")
+
+Fledge<-data$Fledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPct<-data$WoodyPercentage
+WoodyPAR<-data$WoodyPAR
+HerbPerimeter<-data$HerbPerimeter
+HerbArea<-data$HerbArea
+HerbPct<-data$HerbPercentage
+HerbPAR<-data$HerbPAR
+
+##2016 Herb
+
+HerbModel2016<-glm(Fledge ~ HerbArea+HerbPAR, family = "binomial", data = data)
+summary(HerbModel2016)
+
+##2016 Woody
+
+WoodyModel2016<-glm(Fledge ~ WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(WoodyModel2016)
+
+##2014
+
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/Data_Analysis/2014")
+
+data<-read.csv(file="2014Nest.csv", header=TRUE, sep=",")
+
+Fledge<-data$Fledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPct<-data$WoodyPercentage
+WoodyPAR<-data$WoodyPAR
+HerbPerimeter<-data$HerbPerimeter
+HerbArea<-data$HerbArea
+HerbPct<-data$HerbPercentage
+HerbPAR<-data$HerbPAR
+
+##2014 Herb
+
+HerbModel2014<-glm(Fledge ~ HerbArea+HerbPAR, family = "binomial", data = data)
+summary(HerbModel2014)
+
+##2014 Woody
+
+WoodyModel2014<-glm(Fledge ~ WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(WoodyModel2014)
+
+##2012
+
+setwd("C:/Users/Henry Wilden Woolley/Documents/UNO/Research/Data/Data Analysis/QGIS/Predator Analysis/Data_Analysis/2012")
+
+data<-read.csv(file="2012Nest.csv", header=TRUE, sep=",")
+
+Fledge<-data$Fledge
+WoodyPerimeter<-data$WoodyPerimeter
+WoodyArea<-data$WoodyArea
+WoodyPct<-data$WoodyPercentage
+WoodyPAR<-data$WoodyPAR
+HerbPerimeter<-data$HerbPerimeter
+HerbArea<-data$HerbArea
+HerbPct<-data$HerbPercentage
+HerbPAR<-data$HerbPAR
+
+##2012 Herb
+
+HerbModel2012<-glm(Fledge ~ HerbArea+HerbPAR, family = "binomial", data = data)
+summary(HerbModel2012)
+
+##2012 Woody
+
+WoodyModel2012<-glm(Fledge ~ WoodyArea+WoodyPAR, family = "binomial", data = data)
+summary(WoodyModel2012)
